@@ -1,7 +1,8 @@
-package com.sergeypanshyn.activityrecognitiontest
+package com.sergeypanshyn.activityrecognitiontest.presentation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.sergeypanshyn.activityrecognitiontest.R
 
 class MainActivity : AppCompatActivity() {
 
