@@ -1,6 +1,7 @@
 package com.sergeypanshyn.activityrecognitiontest.presentation.di
 
 import com.sergeypanshyn.activityrecognitiontest.ActivityRecognitionApp
+import com.sergeypanshyn.activityrecognitiontest.DetectedActivitiesIntentService
 import com.sergeypanshyn.activityrecognitiontest.data.di.DataModule
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.di.MainComponent
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.di.MainModule
@@ -13,6 +14,8 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun provideMainComponent(mainModule: MainModule): MainComponent
+
+    fun inject(detectedActivitiesIntentService: DetectedActivitiesIntentService)
 
     fun inject(activityRecognitionApp: ActivityRecognitionApp )
 

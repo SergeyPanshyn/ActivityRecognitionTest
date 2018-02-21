@@ -1,5 +1,6 @@
 package com.sergeypanshyn.activityrecognitiontest.presentation.main
 
+import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
 import com.sergeypanshyn.activityrecognitiontest.presentation.Presenter
 
 /**
@@ -9,6 +10,10 @@ interface MainPresenter<T>: Presenter<T> {
 
     interface MainView {
 
+        fun showActivity(activityModel: ActivityModel)
+
     }
+
+    fun subscribeToActivityChange()
 
 }

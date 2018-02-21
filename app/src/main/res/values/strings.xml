@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ActivityRecognitionTest</string>
+
+    <string name="activity_type">Activity type: %s</string>
+    <string name="activity_confidence">Activity confidence: %d </string>
+    <string name="activity_time">Activity start time: %s</string>
+
 </resources>

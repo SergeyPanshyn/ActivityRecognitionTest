@@ -1,5 +1,9 @@
 package com.sergeypanshyn.activityrecognitiontest.presentation.main.di
 
+import com.sergeypanshyn.activityrecognitiontest.data.repository.ActivityCheckManager
+import com.sergeypanshyn.activityrecognitiontest.domain.activity.SubscribeToActivityChangeUseCase
+import com.sergeypanshyn.activityrecognitiontest.domain.base.schedulers.ObserveOn
+import com.sergeypanshyn.activityrecognitiontest.domain.base.schedulers.SubscribeOn
 import com.sergeypanshyn.activityrecognitiontest.presentation.di.PerActivity
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.MainPresenter
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.MainPresenterImpl
@@ -14,6 +18,10 @@ class MainModule {
 
     @Provides
     @PerActivity
-    fun provideMainPresenter(): MainPresenter<MainPresenter.MainView> = MainPresenterImpl()
+    fun provideMainPresenter(subscribeToActivityChangeUseCase: SubscribeToActivityChangeUseCase): MainPresenter<MainPresenter.MainView> = MainPresenterImpl(subscribeToActivityChangeUseCase)
 
+    @Provides
+    @PerActivity
+    fun provideSubscribeToActivityChangeUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, activityCheckManager: ActivityCheckManager)
+            = SubscribeToActivityChangeUseCase(observeOn, subscribeOn, activityCheckManager)
 }
