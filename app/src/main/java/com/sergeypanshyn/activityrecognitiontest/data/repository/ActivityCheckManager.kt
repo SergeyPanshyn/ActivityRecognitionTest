@@ -1,13 +1,13 @@
 package com.sergeypanshyn.activityrecognitiontest.data.repository
 
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
  * Created by Sergey Panshyn on 19.02.2018.
  */
-class ActivityCheckManager {
+class ActivityCheckManager(private val databaseRepository: DatabaseRepository) {
 
     private val activitySubject: PublishSubject<ActivityModel> = PublishSubject.create()
 
@@ -16,7 +16,12 @@ class ActivityCheckManager {
     }
 
     fun detectActivityChange(activityModel: ActivityModel) {
+        saveTodatabase(activityModel)
         activitySubject.onNext(activityModel)
+    }
+
+    private fun saveTodatabase(activityModel: ActivityModel) {
+        databaseRepository.saveActivityPoint(activityModel)
     }
 
 }

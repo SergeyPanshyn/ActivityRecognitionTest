@@ -10,13 +10,14 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.google.android.gms.location.ActivityRecognitionClient
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.sergeypanshyn.activityrecognitiontest.ActivityRecognitionApp
 import com.sergeypanshyn.activityrecognitiontest.DetectedActivitiesIntentService
 import com.sergeypanshyn.activityrecognitiontest.R
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.adapter.MainAdapter
 import com.sergeypanshyn.activityrecognitiontest.presentation.main.di.MainModule
 import javax.inject.Inject
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity(), MainPresenter.MainView {
 
     private var mActivityRecognitionClient: ActivityRecognitionClient? = null
 
+    @OnClick(R.id.clear_button)
+    fun onClearButtonClick() {
+        mainPresenter.clearAllActivities()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,15 +58,22 @@ class MainActivity : AppCompatActivity(), MainPresenter.MainView {
     private fun daggerInit() {
         mainComponent?.inject(this)
         mainPresenter.setView(this)
-        requestActivityUpdatesButtonHandler()
-        mainPresenter.subscribeToActivityChange()
+        requestActivityUpdates()
+        mainPresenter.getAllActivities()
     }
 
-    fun requestActivityUpdatesButtonHandler() {
+    override fun onResume() {
+        super.onResume()
+        if (items.isEmpty()) {
+            mainPresenter.getAllActivities()
+        }
+    }
+
+    private fun requestActivityUpdates() {
         mActivityRecognitionClient = ActivityRecognitionClient(this)
 
         val task = mActivityRecognitionClient!!.requestActivityUpdates(
-                5 * 1000,
+                1 * 1000,
                 getActivityDetectionPendingIntent())
 
         task.addOnSuccessListener(OnSuccessListener<Void> {
@@ -92,6 +105,18 @@ class MainActivity : AppCompatActivity(), MainPresenter.MainView {
 
     override fun showActivity(activityModel: ActivityModel) {
         items.add(activityModel)
+        mainAdapter?.notifyDataSetChanged()
+    }
+
+    override fun showAllActivities(activities: List<ActivityModel>) {
+        items.addAll(activities)
+        mainAdapter?.notifyDataSetChanged()
+
+        mainPresenter.subscribeToActivityChange()
+    }
+
+    override fun onActivitiesCleared() {
+        items.clear()
         mainAdapter?.notifyDataSetChanged()
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.sergeypanshyn.activityrecognitiontest.R
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +30,7 @@ class MainAdapter(val context: Context, val data: List<ActivityModel>): Recycler
     override fun getItemCount() = data.size
 
     private fun getNeededFormat(timestamp: Long): String {
-        val sdf = SimpleDateFormat("HH:mm")
+        val sdf = SimpleDateFormat("HH:mm:ss")
         val resultDate = Date(timestamp)
         return sdf.format(resultDate)
     }

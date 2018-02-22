@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.Log
 import com.google.android.gms.location.ActivityRecognitionResult
 import com.google.android.gms.location.DetectedActivity
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import com.sergeypanshyn.activityrecognitiontest.data.repository.ActivityCheckManager
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ class DetectedActivitiesIntentService : IntentService(TAG) {
     private fun handleDetectedActivities(probableActivities: List<DetectedActivity>) {
         for (activity in probableActivities) {
             if (activity.confidence > 75) {
-                activityCheckManager.detectActivityChange(ActivityModel(System.currentTimeMillis(), map(activity), activity.confidence))
+                activityCheckManager.detectActivityChange(ActivityModel(System.currentTimeMillis(), mapDetectedActivityType(activity), activity.confidence))
             }
         }
     }
@@ -40,7 +40,7 @@ class DetectedActivitiesIntentService : IntentService(TAG) {
         protected val TAG = "DetectedActivitiesIS"
     }
 
-    fun map(activity: DetectedActivity): String {
+    fun mapDetectedActivityType(activity: DetectedActivity): String {
         when (activity.type) {
             DetectedActivity.IN_VEHICLE -> {
                 Log.e("ActivityRecogition", "In Vehicle: " + activity.confidence)

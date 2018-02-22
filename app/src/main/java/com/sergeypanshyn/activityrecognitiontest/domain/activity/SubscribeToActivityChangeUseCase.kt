@@ -1,6 +1,6 @@
 package com.sergeypanshyn.activityrecognitiontest.domain.activity
 
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import com.sergeypanshyn.activityrecognitiontest.data.repository.ActivityCheckManager
 import com.sergeypanshyn.activityrecognitiontest.domain.base.UseCaseStream
 import com.sergeypanshyn.activityrecognitiontest.domain.base.schedulers.ObserveOn

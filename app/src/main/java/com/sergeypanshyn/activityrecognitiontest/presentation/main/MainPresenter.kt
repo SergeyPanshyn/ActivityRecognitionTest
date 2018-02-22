@@ -1,6 +1,6 @@
 package com.sergeypanshyn.activityrecognitiontest.presentation.main
 
-import com.sergeypanshyn.activityrecognitiontest.data.entity.model.ActivityModel
+import com.sergeypanshyn.activityrecognitiontest.data.database.entity.ActivityModel
 import com.sergeypanshyn.activityrecognitiontest.presentation.Presenter
 
 /**
@@ -12,8 +12,16 @@ interface MainPresenter<T>: Presenter<T> {
 
         fun showActivity(activityModel: ActivityModel)
 
+        fun showAllActivities(activities: List<ActivityModel>)
+
+        fun onActivitiesCleared()
+
     }
 
     fun subscribeToActivityChange()
+
+    fun getAllActivities()
+
+    fun clearAllActivities()
 
 }
