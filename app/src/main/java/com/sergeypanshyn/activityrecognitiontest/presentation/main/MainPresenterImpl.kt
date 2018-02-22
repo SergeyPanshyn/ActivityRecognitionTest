@@ -17,6 +17,7 @@ class MainPresenterImpl<T: MainPresenter.MainView>(private val subscribeToActivi
     private var view: T? = null
 
     override fun subscribeToActivityChange() {
+        getAllActivitiesUseCase.unsubscribe()
         subscribeToActivityChangeUseCase.executeObservable(object : ResourceObserver<ActivityModel>(){
             override fun onComplete() {
                 Log.d("onxActivityDetected()", "OnComplete()")

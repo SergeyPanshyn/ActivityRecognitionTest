@@ -16,8 +16,9 @@ class ActivityCheckManager(private val databaseRepository: DatabaseRepository) {
     }
 
     fun detectActivityChange(activityModel: ActivityModel) {
-        saveTodatabase(activityModel)
         activitySubject.onNext(activityModel)
+
+        saveTodatabase(activityModel)
     }
 
     private fun saveTodatabase(activityModel: ActivityModel) {
